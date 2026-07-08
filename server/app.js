@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
+const gigRoutes = require("./routes/gigRoutes");
 dotenv.config();
 
 // Database Connection
@@ -22,6 +22,7 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/gigs", gigRoutes);
 
 // Default Route
 app.get("/", (req, res) => {
