@@ -9,6 +9,7 @@ const {
   getAllGigs,
   getGigById,
   updateGig,
+  deleteGig,
 } = require("../controllers/gigController");
 
 // ================= PUBLIC ROUTES =================
@@ -21,20 +22,28 @@ router.get("/:id", getGigById);
 
 // ================= CLIENT ROUTES =================
 
-// Create Gig (Only Client)
+// Create Gig
 router.post(
-  "/create",
+  "/",
   protect,
   authorize("client"),
   createGig
 );
 
-// Update Gig (Only Owner Client)
+// Update Gig
 router.put(
   "/:id",
   protect,
   authorize("client"),
   updateGig
+);
+
+// Delete Gig
+router.delete(
+  "/:id",
+  protect,
+  authorize("client"),
+  deleteGig
 );
 
 module.exports = router;

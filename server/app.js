@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const gigRoutes = require("./routes/gigRoutes");
+const proposalRoutes = require("./routes/proposalRoutes");
 dotenv.config();
 
 // Database Connection
@@ -23,7 +24,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/gigs", gigRoutes);
-
+app.use("/api/proposals", proposalRoutes);
 // Default Route
 app.get("/", (req, res) => {
   res.send("🚀 SkillSphere API Running...");
