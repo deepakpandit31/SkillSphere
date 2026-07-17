@@ -1,5 +1,6 @@
 const Proposal = require("../models/Proposal");
 const Gig = require("../models/Gig");
+const Notification = require("../models/Notification");
 
 // ================= APPLY FOR GIG =================
 const applyForGig = async (req, res) => {
@@ -41,6 +42,14 @@ const applyForGig = async (req, res) => {
       bidAmount,
       estimatedDays,
     });
+    await Notification.create({
+  recipient: gig.client,
+  sender: req.user.id,
+  type: "proposal",
+  title: "New Proposal",
+  message: "A freelancer has submitted a proposal for your gig.",
+  referenceId: proposal._id,
+});
 
     res.status(201).json({
       success: true,
@@ -143,6 +152,15 @@ const acceptProposal = async (req, res) => {
     proposal.status = "accepted";
     await proposal.save();
 
+    await Notification.create({
+  recipient: proposal.freelancer,
+  sender: req.user.id,
+  type: "proposal",
+  title: "Proposal Accepted",
+  message: "Congratulations! Your proposal has been accepted.",
+  referenceId: proposal._id,
+});
+
     res.status(200).json({
       success: true,
       message: "Proposal accepted successfully.",
@@ -180,6 +198,14 @@ const rejectProposal = async (req, res) => {
 
     proposal.status = "rejected";
     await proposal.save();
+    await Notification.create({
+  recipient: proposal.freelancer,
+  sender: req.user.id,
+  type: "proposal",
+  title: "Proposal Rejected",
+  message: "Your proposal has been rejected.",
+  referenceId: proposal._id,
+});
 
     res.status(200).json({
       success: true,

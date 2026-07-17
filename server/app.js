@@ -14,7 +14,7 @@ connectDB();
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
-
+const notificationRoutes = require("./routes/notificationRoutes");
 // Initialize Express
 const app = express();
 
@@ -28,6 +28,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/gigs", gigRoutes);
 app.use("/api/proposals", proposalRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/notifications", notificationRoutes);
 // Default Route
 app.get("/", (req, res) => {
   res.send("🚀 SkillSphere API Running...");
